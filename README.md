@@ -6,8 +6,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/WASHD.svg?style=flat)](http://cocoapods.org/pods/WASHD)
 
 ## Requirements
-ARC
-iOS 8
+- ARC
+- iOS 8
 
 ## Installation
 
