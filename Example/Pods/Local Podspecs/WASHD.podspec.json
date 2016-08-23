@@ -1,0 +1,22 @@
+{
+  "name": "WASHD",
+  "version": "0.1.0",
+  "summary": "A short description of WASHD.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/WASHD",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Andrew Goodwin": "andrewggoodwin@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/WASHD.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "WASHD/Classes/**/*"
+}
