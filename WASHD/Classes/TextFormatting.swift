@@ -64,7 +64,6 @@ public extension UITextField
             if backspace == false{
                 textFieldArray = textFieldArray + newStringArray
                 for s in newStringArray{
-                    //print(s)
                     if textSourceArray.count < formatArray.count{
                         if String(formatArray[textSourceArray.count]).lowercaseString == "x"{
                             newText = newText + String(textFieldArray[textFieldIndex+1])
@@ -93,17 +92,10 @@ public extension UITextField
                         newText = newText + String(textFieldArray[textFieldIndex+1])
                         textFieldIndex = textFieldIndex + 1
                     }
-                    //print(textFieldArray)
-                    
-                    //print(textSourceArray)
                 }
                 self.text = self.text! + newText
                 if self.text?.characters.count == formatArray.count{
-                    //print("done formatting")
-                    //if self.respondsToSelector(Selector("getjumpOrder")){
-                        //do i support auto first responder
-                        NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.Format", object: nil)
-                    //}
+                    NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.Format", object: nil)
                 }
                 self.sendActionsForControlEvents(.EditingChanged)
                 return false
@@ -126,7 +118,6 @@ public extension UITextField
                         }
                         
                     }
-                    //print(textSourceArray)
                     
                 }
                 else if textFieldArray.count > 0{
@@ -136,8 +127,6 @@ public extension UITextField
                 for ch in textFieldArray{
                     newText = newText + String(ch)
                 }
-                
-                //print(textFieldArray)
                 
                 self.text = newText
                 self.sendActionsForControlEvents(.EditingChanged)
