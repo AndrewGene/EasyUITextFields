@@ -63,7 +63,7 @@ public extension UITextField
             var newText = ""
             if backspace == false{
                 textFieldArray = textFieldArray + newStringArray
-                for s in newStringArray{
+                for _ in newStringArray{
                     if textSourceArray.count < formatArray.count{
                         if String(formatArray[textSourceArray.count]).lowercaseString == "x"{
                             newText = newText + String(textFieldArray[textFieldIndex+1])
