@@ -25,10 +25,6 @@ pod "WASHD"
 
 ##Required Code
 **To Support UITextField "jump order"**
-
-"Jump Order" refers to the order in which UITextFields will be given first responder on press of the "Return" button (like tab order in web development)
-
-*Jump Order also works on UITextView* :punch:
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,8 +40,12 @@ func textFieldShouldReturn(textField: UITextField) -> Bool {
     return true
 }
 ```
+"Jump Order" refers to the order in which UITextFields will be given first responder on press of the "Return" button (like tab order in web development)
+
+*Jump Order also works on UITextView* :punch:
 
 **To support max length, text filtering, and text formatting**
+
 ```swift
 func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
     if textField.reachedMaxLength(range, string: string) || !string.shouldAllow(textField.allowedCharacters){
@@ -54,8 +54,9 @@ func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRa
     return textField.formatText(string)
 }
 ```
+*Even if you haven't set a format on a UITextField, you can still use "textField.formatText(string)".  It will simply return true.*
 
-**To validate before form submission**
+**To validate before form submission (test every UITextField you want validated)**
 ```swift
 let result = txtCreditCard.validate() //returns ValidationResult (see below)
 if result.isValid
@@ -67,6 +68,8 @@ else
   print(result.failureMessage)
 }
 ```
+#That's it!
+
 **Validation Result**
 ```swift
 class ValidationResult
