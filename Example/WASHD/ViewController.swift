@@ -9,14 +9,14 @@
 import UIKit
 import WASHD
 
-class ViewController: UIViewController, UITextFieldDelegate {
+public class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var txtIB: UITextField!
     @IBOutlet var txtProgrammatic: UITextField!
     @IBOutlet var txtAdvanced: UITextField!
     var lblRight = UILabel()
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.findAllTextInputs() //find all text inputs in the view controller for jump order process
@@ -64,21 +64,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return account.rangeOfString("4") != nil
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override public func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         txtIB.becomeFirstResponder()
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    public func textFieldDidBeginEditing(textField: UITextField) {
         self.currentjumpOrder = textField.jumpOrder //set current first responder index
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.moveNext() //move to the next text input in order
         return true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
         if textField.reachedMaxLength(range, string: string) || !string.shouldAllow(textField.allowedCharacters){
             return false
@@ -150,7 +150,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //This is where you would normally show the end user your error messages. Only if they are all valid would you then submit your form.
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
