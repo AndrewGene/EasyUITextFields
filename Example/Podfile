@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'WASHD_Example' do
+  pod 'WASHD', :path => '../'
+
+  target 'WASHD_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
