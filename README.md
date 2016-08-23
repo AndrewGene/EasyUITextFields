@@ -1,5 +1,7 @@
 # WASHD - What Apple Should Have Done
-##The easiest way to add validation, text filtering, text field order to your UITextFields
+##The easiest way to add validation, text filtering, max length, and text field order to your UITextFields
+
+###The best part is that you don't have to subclass UITextField--this is made using extensions
 
 [![Version](https://img.shields.io/cocoapods/v/WASHD.svg?style=flat)](http://cocoapods.org/pods/WASHD)
 [![License](https://img.shields.io/cocoapods/l/WASHD.svg?style=flat)](http://cocoapods.org/pods/WASHD)
@@ -16,6 +18,64 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod "WASHD"
+```
+##Usage
+###Interface Builder
+![IB](/IBScreenshot.png?raw=true "Interface Builder")
+
+##Required Code
+**To Support UITextField "jump order"**
+
+"Jump Order" refers to the order in which UITextFields will be given first responder on press of the "Return" button (like tab order in web development)
+
+*Jump Order also works on UITextView* :punch:
+```swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+    self.findAllTextInputs() //find all text inputs in the view controller for jump order process
+}
+
+func textFieldDidBeginEditing(textField: UITextField) {
+    self.currentjumpOrder = textField.jumpOrder //set current jump order
+}
+    
+func textFieldShouldReturn(textField: UITextField) -> Bool {
+    self.moveNext() //move to the next text input in order
+    return true
+}
+```
+
+**To support max length, text filtering, and text formatting**
+```swift
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    if textField.reachedMaxLength(range, string: string) || !string.shouldAllow(textField.allowedCharacters){
+        return false
+    }
+    return textField.formatText(string)
+}
+```
+
+**To validate before form submission**
+```swift
+let result = txtCreditCard.validate() //returns ValidationResult (see below)
+if result.isValid
+{
+  print(result.transformedString)
+}
+else
+{
+  print(result.failureMessage)
+}
+```
+**Validation Result**
+```swift
+class ValidationResult
+{
+    var isValid = false
+    var failureMessage : String? = nil
+    var transformedString : String = ""
+    //...
+}
 ```
 
 **Built-in validation types**
@@ -48,41 +108,75 @@ pod "WASHD"
     case States = 23
     case Name = 24
 ```
-###Using Interface Builder
 
-![IB](/IBScreenshot.png?raw=true "Interface Builder")
 
-###...or, programatically
+###You can also set everything up programatically
 ```swift
-txtZip.validationType = .Zip
+txtCreditCard.validationType = .CreditCard
+txtCreditCard.format = "xxxx xxxx xxxx xxxx"
+txtCreditCard.maxLength = 19
+txtCreditCard.jumpOrder = 1
 ```
-***...then, test validation before form submission.***
+
+#Individual Enchancement Breakdown
+
+##Supporting Max Length
 ```swift
-txtZip.text = "72034"        
-let result = txtZip.validate() //returns ValidationResult
-```
-**Validation Result**
-```swift
-class ValidationResult
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
 {
-    var isValid = false
-    var failureMessage : String? = nil
-    var transformedString : String = ""
-    //...
+  if textField.reachedMaxLength(range, string: string)
+    return false
+  }
+  return true
 }
 ```
-**Now you can check if the result is valid or not.**
+
+##Filtering UITextField
+
+###It's built in if you use validation!
+
+**(e.g. a textfield with a validationType set to ".Zip" (i.e. txtZip.validationType = .Zip) will get have txtZip.allowedCharacters set to the Zip constant below)**
+
+**Simply add this code to the "...shouldChangeCharactersInRange..." UITextField delegate method...**
 ```swift
-if result.isValid
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
 {
-  print(result.transformedString)
-}
-else
-{
-  print(result.failureMessage)
+  if !string.shouldAllow(textField.allowedCharacters)
+    return false
+  }
+  return true
 }
 ```
-##Creating your own validation expressions
+
+**UITextField predefined strings**
+```swift
+let UpperCaseLetters = "ABCDEFGHIJKLKMNOPQRSTUVWXYZ"
+let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
+let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ"
+let UpperCaseHex = "0123456789ABCDEF"
+let LowerCaseHex = "0123456789abcdef"
+let AllHex = "0123456789abcdefABCDEF"
+let PositiveWholeNumbers = "0123456789"
+let WholeNumbers = "-0123456789"
+let PositiveFloats = "0123456789."
+let Floats = "-0123456789."
+let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_-+@.%"
+let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 -#.&"
+let IPAddress = "0123456789."
+let Money = "0123456789.$"
+let Phone = "0123456789.()- "
+let Zip = "0123456789-“
+```
+
+###Alternatively, you can add your own using "shouldAllow(String...)"
+```swift
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
+{
+  return string.shouldAllow(Numbers, "@#$") // you can enter several different strings of characters to allow
+}
+```
+
+##Validation
 
 ###Declare your own — simple expression...
 ```swift
@@ -126,7 +220,6 @@ let creditCard = ValidationExpression(expression: "^(?:4[0-9]{12}(?:[0-9]{3})?|5
             description: "Debit or Credit Card",
             failureDescription: "Invalid card",
             hints: [ValidationRule(priority: 0, expression: "\\d+", failureDescription: "Missing Numbers")],
-            interfaceBuilderAliases: ["card","credit card","debit card","cc"],
             transformText:
             { (card) in
                 var myString = card
@@ -155,50 +248,8 @@ func luhnTest(number: String) -> Bool
     }) % 10 == 0
 }
 ```
-##Filtering UITextField
 
-###It's built in if you use validation!
 
-**(e.g. a textfield with a validationType set to ".Zip" (i.e. txtZip.validationType = .Zip) will get have txtZip.allowedCharacters set to the Zip constant below)**
-
-**Simply add this code to the "...shouldChangeCharactersInRange..." UITextField delegate method...**
-```swift
-func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
-{
-  if textField.allowedCharacters != nil{
-    return string.shouldAllow(textField.allowedCharacters!)
-  }
-  return true
-}
-```
-
-**UITextField predefined strings**
-```swift
-let UpperCaseLetters = "ABCDEFGHIJKLKMNOPQRSTUVWXYZ"
-let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
-let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ"
-let UpperCaseHex = "0123456789ABCDEF"
-let LowerCaseHex = "0123456789abcdef"
-let AllHex = "0123456789abcdefABCDEF"
-let PositiveWholeNumbers = "0123456789"
-let WholeNumbers = "-0123456789"
-let PositiveFloats = "0123456789."
-let Floats = "-0123456789."
-let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_-+@.%"
-let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 -#.&"
-let IPAddress = "0123456789."
-let Money = "0123456789.$"
-let Phone = "0123456789.()- "
-let Zip = "0123456789-“
-```
-
-###Alternatively, you can add your own using "shouldAllow(String...)"
-```swift
-func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
-{
-  return string.shouldAllow(Numbers, "@#$") // you can enter several different strings of characters to allow
-}
-```
 ##TODOs
 - [x] Add character filtering
 - [ ] Add more useful hints for several validationTypes
