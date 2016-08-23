@@ -22,7 +22,7 @@ pod "WASHD"
 
 ## Author
 
-Andrew Goodwin, andrewggoodwin@gmail.com
+Andrew Goodwin, andrewggoodwin@gmail.com :)
 
 ## License
 
