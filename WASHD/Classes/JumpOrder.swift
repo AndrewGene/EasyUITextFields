@@ -24,10 +24,10 @@ private struct AssociatedKeys {
 }
 
 @IBDesignable
-extension UITextField
+public extension UITextField
 {    
     @IBInspectable
-    var formatJump: Bool {
+    public var formatJump: Bool {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.fj) as? Bool ?? false
         }
@@ -37,7 +37,7 @@ extension UITextField
     }
     
     @IBInspectable
-    var lengthJump: Bool {
+    public var lengthJump: Bool {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.lj) as? Bool ?? false
         }
@@ -46,7 +46,7 @@ extension UITextField
         }
     }
     
-    var textLengthNotification: AnyObject? {
+    private var textLengthNotification: AnyObject? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.tln) ?? nil
         }
@@ -55,7 +55,7 @@ extension UITextField
         }
     }
     
-    var textFormatNotification: AnyObject? {
+    private var textFormatNotification: AnyObject? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.tfn) ?? nil
         }
@@ -65,7 +65,7 @@ extension UITextField
     }
     
     @IBInspectable
-    var jumpOrder: Int {
+    public var jumpOrder: Int {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.fri) as? Int ?? -1
         }
@@ -90,17 +90,17 @@ extension UITextField
         }
     }
     
-    func getjumpOrder()->Int{
+    public func getjumpOrder()->Int{
         return jumpOrder
         //NSNotificationCenter.defaultCenter().postNotificationName("firstResponder.MoveNext", object: jumpOrder + 1)
     }
 }
 
 @IBDesignable
-extension UITextView
+public extension UITextView
 {
     @IBInspectable
-    var jumpOrder: Int {
+    public var jumpOrder: Int {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.fri) as? Int ?? -1
         }
@@ -109,15 +109,15 @@ extension UITextView
         }
     }
     
-    func getjumpOrder()->Int{
+    public func getjumpOrder()->Int{
         return jumpOrder
         //NSNotificationCenter.defaultCenter().postNotificationName("firstResponder.MoveNext", object: jumpOrder + 1)
     }
 }
 
-extension UIViewController{
+public extension UIViewController{
     
-    var currentjumpOrder: Int {
+    public var currentjumpOrder: Int {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.cfri) as? Int ?? -1
         }
@@ -125,7 +125,7 @@ extension UIViewController{
             objc_setAssociatedObject(self, &AssociatedKeys.cfri, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    var textInputArray: [UIView] {
+    public var textInputArray: [UIView] {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.fra) as? [UIView] ?? [UIView]()
         }
@@ -138,7 +138,7 @@ extension UIViewController{
             )
         }
     }
-    var moveNextDate: NSDate? {
+    private var moveNextDate: NSDate? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.mnd) as? NSDate ?? nil
         }
@@ -146,15 +146,7 @@ extension UIViewController{
             objc_setAssociatedObject(self, &AssociatedKeys.mnd, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    var moveNextTimer: NSTimer? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.mnt) as? NSTimer ?? nil
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedKeys.mnt, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    var formatNotification: AnyObject? {
+    private var formatNotification: AnyObject? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.fn) ?? nil
         }
@@ -162,7 +154,7 @@ extension UIViewController{
             objc_setAssociatedObject(self, &AssociatedKeys.fn, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    var lengthNotification: AnyObject? {
+    private var lengthNotification: AnyObject? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.ln) ?? nil
         }
@@ -171,7 +163,7 @@ extension UIViewController{
         }
     }
     
-    func moveNext(){
+    public func moveNext(){
         self.moveNextDate = NSDate()
         for view in self.textInputArray{
             if view is UITextField{
@@ -193,7 +185,7 @@ extension UIViewController{
         }
     }
     
-    func findAllTextInputs(){
+    public func findAllTextInputs(){
         self.textInputArray = [UIView]()
         if formatNotification != nil{
             NSNotificationCenter.defaultCenter().removeObserver(formatNotification!)
@@ -204,7 +196,7 @@ extension UIViewController{
                 self!.moveNext()
             }
             else if self!.moveNextDate != nil{
-                print(self!.moveNextDate!.timeIntervalSinceNow)
+                //print(self!.moveNextDate!.timeIntervalSinceNow)
                 if abs(self!.moveNextDate!.timeIntervalSinceNow) < 0.1{
                     //do nothing
                 }
@@ -222,7 +214,7 @@ extension UIViewController{
                 self!.moveNext()
             }
             else if self!.moveNextDate != nil{
-                print(self!.moveNextDate!.timeIntervalSinceNow)
+                //print(self!.moveNextDate!.timeIntervalSinceNow)
                 if abs(self!.moveNextDate!.timeIntervalSinceNow) < 0.1{
                     //do nothing
                 }
@@ -236,7 +228,7 @@ extension UIViewController{
     
     private func findAllTextInputsInView(inputView:UIView){
         for view in inputView.subviews{
-            if view.respondsToSelector(Selector("getjumpOrder")){
+            if view.respondsToSelector(#selector(UITextField.getjumpOrder)) || view.respondsToSelector(#selector(UITextView.getjumpOrder)){
                 if view is UITextField{
                     textInputArray.append(view)
                     if view.subviews.count > 0{

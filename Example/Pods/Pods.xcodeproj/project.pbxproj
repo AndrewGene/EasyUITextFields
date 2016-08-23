@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		1A14D282D064A2A7B7E1CA140DB45E40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		1E1B6EC2E7E01191653BE0DCA698F3D9 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769676C278ADFD3D8C2E74CF4FF83B94 /* ReplaceMe.swift */; };
+		3B3BEAC0C4C54A0979F2865B1FEF4E4E /* WASHD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F88BB5936A7912C48F860CCCE2874F3 /* WASHD-dummy.m */; };
+		4BE5647FE43BAFE621C9DF15F1A81180 /* TextFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F904A7D368AD61F46227CFCF724AD1 /* TextFormatting.swift */; };
+		542F4A47E29D66175B000E56150A4C6C /* MaxLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E72B4AFD548B0A13482612AF916FD1 /* MaxLength.swift */; };
 		56E6514D12725CE77AF6E6BCED449DCC /* Pods-WASHD_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B0CA546022071CA6BF4B81891A7E12 /* Pods-WASHD_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		579E1B20BB9294F5E297116419F40564 /* Pods-WASHD_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE4B259743C84ED9C1D8BF3C84FF1E3 /* Pods-WASHD_Example-dummy.m */; };
 		926A12E7599F4877E2DCD11AA14DCA82 /* WASHD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 97962026F8EE3DF49F3A2A4206E884C7 /* WASHD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D8BD77FD73D983C5806EBE435351CEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 		B32DF12E668794381036603F2C4E5140 /* Pods-WASHD_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1D9885E66A568BF81D1B1886A78A2 /* Pods-WASHD_Tests-dummy.m */; };
 		BFC9498C1330E55E6196E6C39849567F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		C288CC3D69141E39B398A436F6C4606A /* WASHD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F88BB5936A7912C48F860CCCE2874F3 /* WASHD-dummy.m */; };
+		CE114AEE0C2D2AFF6C4910783BB31378 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD9F4AD03B37C7B7B6BD6A1C235414 /* Validation.swift */; };
 		E1363F168ED9DFE03C9164F3C8B544D2 /* Pods-WASHD_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC373405B8A0FE71452C62AE643A660 /* Pods-WASHD_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA519C94666579C3602703D7594990A9 /* JumpOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5173BBF82427DC154CCEE8EBE745C7 /* JumpOrder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,12 +41,13 @@
 		26113B89A9C7A27942437EEFF442EE6A /* Pods_WASHD_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WASHD_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B08CD62CE8A09B1599A77F5138F0727 /* WASHD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = WASHD.modulemap; sourceTree = "<group>"; };
 		35E1D9885E66A568BF81D1B1886A78A2 /* Pods-WASHD_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WASHD_Tests-dummy.m"; sourceTree = "<group>"; };
+		36FD9F4AD03B37C7B7B6BD6A1C235414 /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		376B3C53DFB6C4CCB235C3EAC8AED9E3 /* Pods-WASHD_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-WASHD_Tests.modulemap"; sourceTree = "<group>"; };
 		5386BBD591BFD2EE91C386AFBE1B049A /* Pods_WASHD_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WASHD_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A5173BBF82427DC154CCEE8EBE745C7 /* JumpOrder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JumpOrder.swift; sourceTree = "<group>"; };
 		605AABBEE64B3EA51742E5F3404BCC20 /* Pods-WASHD_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WASHD_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		670192A1F42B50DC99D79EFEA953EA05 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74F8309AF3091DC6AE1CAD991D4CA0CC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		769676C278ADFD3D8C2E74CF4FF83B94 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		87446999852156DF8E71450BE4403B70 /* Pods-WASHD_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WASHD_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8E574E1C2448E0E463004E4085BA3A0A /* Pods-WASHD_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WASHD_Example-resources.sh"; sourceTree = "<group>"; };
 		92C1F4B943B921321D6F0605CD9F2852 /* Pods-WASHD_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WASHD_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -52,6 +56,7 @@
 		9B3E2D5EACECCB337F8998D5321E3D00 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABFD6549D7757F17A32B09FDC60CA81C /* Pods-WASHD_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WASHD_Example.release.xcconfig"; sourceTree = "<group>"; };
 		B193EF4B7C8364B531BC3F99AF1FDB2C /* Pods-WASHD_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-WASHD_Example.modulemap"; sourceTree = "<group>"; };
+		B9F904A7D368AD61F46227CFCF724AD1 /* TextFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextFormatting.swift; sourceTree = "<group>"; };
 		BDE4B259743C84ED9C1D8BF3C84FF1E3 /* Pods-WASHD_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WASHD_Example-dummy.m"; sourceTree = "<group>"; };
 		BEC373405B8A0FE71452C62AE643A660 /* Pods-WASHD_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WASHD_Example-umbrella.h"; sourceTree = "<group>"; };
 		BF06A51BEBB3DE4015A1188DAE4C9633 /* Pods-WASHD_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WASHD_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -59,6 +64,7 @@
 		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D1B0CA546022071CA6BF4B81891A7E12 /* Pods-WASHD_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WASHD_Tests-umbrella.h"; sourceTree = "<group>"; };
 		DF1D8CEEF5E576373EE63449805F173A /* WASHD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WASHD.xcconfig; sourceTree = "<group>"; };
+		E8E72B4AFD548B0A13482612AF916FD1 /* MaxLength.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MaxLength.swift; sourceTree = "<group>"; };
 		F0819A7A17C3F7ACED6FB9BFA187CFC7 /* Pods-WASHD_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WASHD_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F84875BE4AB6619A3D5B307DE6BD7FE0 /* Pods-WASHD_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WASHD_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F91CC4093B4D639FC67B2046B1540407 /* Pods-WASHD_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WASHD_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -92,14 +98,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E4B9CD65FE181D6454F27E2F3E8C6A /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				769676C278ADFD3D8C2E74CF4FF83B94 /* ReplaceMe.swift */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		08B8C8C2C1749E22F4C204C327C8BD4E /* Pods-WASHD_Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +138,14 @@
 			path = "Example/Pods/Target Support Files/WASHD";
 			sourceTree = "<group>";
 		};
+		78586A9DB2A3588CA9F6AA7D0D689312 /* WASHD */ = {
+			isa = PBXGroup;
+			children = (
+				956971C6AADA62EFDEA65153CA42C903 /* Classes */,
+			);
+			path = WASHD;
+			sourceTree = "<group>";
+		};
 		7D399972E3744C0EE60E516A31F96294 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,10 +170,21 @@
 			isa = PBXGroup;
 			children = (
 				5C3FE15FA099FB67287834C963A32003 /* Support Files */,
-				CF1DA10ED78201946611980404924FA7 /* WASHD */,
+				78586A9DB2A3588CA9F6AA7D0D689312 /* WASHD */,
 			);
 			name = WASHD;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		956971C6AADA62EFDEA65153CA42C903 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5A5173BBF82427DC154CCEE8EBE745C7 /* JumpOrder.swift */,
+				E8E72B4AFD548B0A13482612AF916FD1 /* MaxLength.swift */,
+				B9F904A7D368AD61F46227CFCF724AD1 /* TextFormatting.swift */,
+				36FD9F4AD03B37C7B7B6BD6A1C235414 /* Validation.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		9A1DCE7A5AC0CD399365E8F0E2C69CDB /* Pods-WASHD_Example */ = {
@@ -204,14 +221,6 @@
 				3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CF1DA10ED78201946611980404924FA7 /* WASHD */ = {
-			isa = PBXGroup;
-			children = (
-				00E4B9CD65FE181D6454F27E2F3E8C6A /* Classes */,
-			);
-			path = WASHD;
 			sourceTree = "<group>";
 		};
 		DD61C2BBCDF8F6E20BD11C3E9442567D /* Development Pods */ = {
@@ -256,7 +265,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4019920764F981392CE86841847D2459 /* Build configuration list for PBXNativeTarget "WASHD" */;
 			buildPhases = (
-				03EF0A1DCD4251834A86300B7447894C /* Sources */,
+				1E628912B01819F0982F6C23106893B6 /* Sources */,
 				40ABA0E6F58DFA8591368F400B6028C0 /* Frameworks */,
 				41C91D1D5E7ECFB02876754A9ACD6E8C /* Headers */,
 			);
@@ -333,15 +342,6 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		03EF0A1DCD4251834A86300B7447894C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1E1B6EC2E7E01191653BE0DCA698F3D9 /* ReplaceMe.swift in Sources */,
-				C288CC3D69141E39B398A436F6C4606A /* WASHD-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0BA07381DD386BFF310842E794966143 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,6 +355,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32DF12E668794381036603F2C4E5140 /* Pods-WASHD_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E628912B01819F0982F6C23106893B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA519C94666579C3602703D7594990A9 /* JumpOrder.swift in Sources */,
+				542F4A47E29D66175B000E56150A4C6C /* MaxLength.swift in Sources */,
+				4BE5647FE43BAFE621C9DF15F1A81180 /* TextFormatting.swift in Sources */,
+				CE114AEE0C2D2AFF6C4910783BB31378 /* Validation.swift in Sources */,
+				3B3BEAC0C4C54A0979F2865B1FEF4E4E /* WASHD-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

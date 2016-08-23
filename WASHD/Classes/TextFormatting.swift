@@ -15,10 +15,10 @@ private struct AssociatedKeys {
 }
 
 @IBDesignable
-extension UITextField
+public extension UITextField
 {
     @IBInspectable
-    var format: String {
+    public var format: String {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.format) as? String ?? ""
         }
@@ -52,7 +52,7 @@ extension UITextField
         }
     }
     
-    func formatText(string:String)->Bool{
+    public func formatText(string:String)->Bool{
         //string is the newest character to be added
         if self.format != "" && self.text != nil{
             let backspace = string == ""
@@ -64,7 +64,7 @@ extension UITextField
             if backspace == false{
                 textFieldArray = textFieldArray + newStringArray
                 for s in newStringArray{
-                    print(s)
+                    //print(s)
                     if textSourceArray.count < formatArray.count{
                         if String(formatArray[textSourceArray.count]).lowercaseString == "x"{
                             newText = newText + String(textFieldArray[textFieldIndex+1])
@@ -93,18 +93,19 @@ extension UITextField
                         newText = newText + String(textFieldArray[textFieldIndex+1])
                         textFieldIndex = textFieldIndex + 1
                     }
-                    print(textFieldArray)
+                    //print(textFieldArray)
                     
-                    print(textSourceArray)
+                    //print(textSourceArray)
                 }
                 self.text = self.text! + newText
                 if self.text?.characters.count == formatArray.count{
-                    print("done formatting")
+                    //print("done formatting")
                     //if self.respondsToSelector(Selector("getjumpOrder")){
                         //do i support auto first responder
                         NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.Format", object: nil)
                     //}
                 }
+                self.sendActionsForControlEvents(.EditingChanged)
                 return false
             }
             else{
@@ -125,7 +126,7 @@ extension UITextField
                         }
                         
                     }
-                    print(textSourceArray)
+                    //print(textSourceArray)
                     
                 }
                 else if textFieldArray.count > 0{
@@ -136,9 +137,10 @@ extension UITextField
                     newText = newText + String(ch)
                 }
                 
-                print(textFieldArray)
+                //print(textFieldArray)
                 
                 self.text = newText
+                self.sendActionsForControlEvents(.EditingChanged)
                 return false
             }
         }
@@ -200,7 +202,7 @@ extension UITextField
         }
         for ent in userEnteredIndices{
             let char = String(enteredArray[ent])
-            print(char)
+            //print(char)
             enteredText = enteredText + char
         }
         return enteredText

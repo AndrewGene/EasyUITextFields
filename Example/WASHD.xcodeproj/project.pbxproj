@@ -43,6 +43,7 @@
 		767406241B80F6691D881FFD /* Pods-WASHD_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WASHD_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WASHD_Example/Pods-WASHD_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		77BCB7B112FB4325F160B4DB /* Pods_WASHD_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WASHD_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5B98893215A5E9543FB3F01 /* Pods-WASHD_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WASHD_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WASHD_Tests/Pods-WASHD_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA3CD6391D6C89FC00B5DBD6 /* WASHD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WASHD.framework; path = "../../../../Library/Developer/Xcode/DerivedData/WASHD-fclmfkggiqsfehewnxspulfaquhr/Build/Products/Debug-iphonesimulator/WASHD/WASHD.framework"; sourceTree = "<group>"; };
 		B53C6501118D322992A47FC4 /* Pods-WASHD_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WASHD_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-WASHD_Example/Pods-WASHD_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BA33BC99DAA80DD9E87B6663 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		F07CE2EE099816F302F96556 /* Pods_WASHD_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WASHD_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +154,7 @@
 		E2CE90AF4DD20C1781A790EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA3CD6391D6C89FC00B5DBD6 /* WASHD.framework */,
 				F07CE2EE099816F302F96556 /* Pods_WASHD_Example.framework */,
 				77BCB7B112FB4325F160B4DB /* Pods_WASHD_Tests.framework */,
 			);

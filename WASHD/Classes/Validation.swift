@@ -9,24 +9,24 @@
 import Foundation
 import UIKit
 
-let UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
-let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let UpperCaseHex = "0123456789ABCDEF"
-let LowerCaseHex = "0123456789abcdef"
-let AllHex = "0123456789abcdefABCDEF"
-let PositiveWholeNumbers = "0123456789"
-let WholeNumbers = "-0123456789"
-let PositiveFloats = "0123456789."
-let Floats = "-0123456789."
-let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+@.%"
-let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -#.&"
-let IPAddress = "0123456789."
-let Money = "0123456789.$"
-let Phone = "0123456789.()- "
-let Zip = "0123456789-"
+public let UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+public let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
+public let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+public let UpperCaseHex = "0123456789ABCDEF"
+public let LowerCaseHex = "0123456789abcdef"
+public let AllHex = "0123456789abcdefABCDEF"
+public let PositiveWholeNumbers = "0123456789"
+public let WholeNumbers = "-0123456789"
+public let PositiveFloats = "0123456789."
+public let Floats = "-0123456789."
+public let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+@.%"
+public let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -#.&"
+public let IPAddress = "0123456789."
+public let Money = "0123456789.$"
+public let Phone = "0123456789.()- "
+public let Zip = "0123456789-"
 
-class Validation
+public class Validation
 {
     var expressions = [ValidationExpression]()
     static var expression = Validation()
@@ -141,12 +141,12 @@ class Validation
         
     }
     
-    func isValid(expression: ValidationExpression, string: String) -> ValidationResult
+    public func isValid(expression: ValidationExpression, string: String) -> ValidationResult
     {
         return expression.validate(string)
     }
     
-    func isValid(validation: ValidationType, string: String) -> ValidationResult
+    public func isValid(validation: ValidationType, string: String) -> ValidationResult
     {
         let expression = expressions[validation.rawValue]
         return expression.validate(string)
@@ -165,7 +165,7 @@ class Validation
     
 }
 
-enum ValidationType : Int
+public enum ValidationType : Int
 {
     case None = -1
     case Zip = 0
@@ -202,28 +202,28 @@ private struct AssociatedKeys {
     static var ac = "allowedChars"
 }
 
-class ValidationExpression
+public class ValidationExpression
 {
-    var hints: [ValidationRule]?
-    var description = ""
-    var expression = ""
-    var failureDescription = ""
-    var aliases: [String]?
-    var transformedString = ""
+    public var hints: [ValidationRule]?
+    public var description = ""
+    public var expression = ""
+    public var failureDescription = ""
+    public var aliases: [String]?
+    public var transformedString = ""
     private var transformationClosure: ((String?) -> String)? = nil
     private var furtherValidationClosure: ((String) -> ValidationResult)? = nil
     
-    init()
+    public init()
     {
         
     }
-    init(expression: String, description: String, failureDescription: String)
+    public init(expression: String, description: String, failureDescription: String)
     {
         self.expression = expression
         self.description = description
         self.failureDescription = failureDescription
     }
-    init(expression: String, description: String, failureDescription: String, hints: [ValidationRule]?, transformText: ((String?) -> String)?, furtherValidation: ((String) -> ValidationResult)?)
+    public init(expression: String, description: String, failureDescription: String, hints: [ValidationRule]?, transformText: ((String?) -> String)?, furtherValidation: ((String) -> ValidationResult)?)
     {
         self.transformationClosure = transformText
         self.expression = expression
@@ -236,7 +236,7 @@ class ValidationExpression
         self.failureDescription = failureDescription
         self.furtherValidationClosure = furtherValidation
     }
-    init(expression: String, description: String, failureDescription: String, hints: [ValidationRule]?, interfaceBuilderAliases aliases:[String]?, transformText: ((String?) -> String)?, furtherValidation: ((String) -> ValidationResult)?)
+    public init(expression: String, description: String, failureDescription: String, hints: [ValidationRule]?, interfaceBuilderAliases aliases:[String]?, transformText: ((String?) -> String)?, furtherValidation: ((String) -> ValidationResult)?)
     {
         self.transformationClosure = transformText
         self.expression = expression
@@ -250,7 +250,7 @@ class ValidationExpression
         self.failureDescription = failureDescription
         self.furtherValidationClosure = furtherValidation
     }
-    func validate(string: String) -> ValidationResult
+    public func validate(string: String) -> ValidationResult
     {
         self.transformedString = string
         if self.transformationClosure != nil
@@ -282,13 +282,13 @@ class ValidationExpression
     }
 }
 
-class ValidationResult
+public class ValidationResult
 {
-    var isValid = false
-    var failureMessage : String? = nil
-    var transformedString : String = ""
+    public var isValid = false
+    public var failureMessage : String? = nil
+    public var transformedString : String = ""
     
-    init(isValid: Bool, failureMessage:String?, transformedString: String)
+    public init(isValid: Bool, failureMessage:String?, transformedString: String)
     {
         self.isValid = isValid
         self.failureMessage = failureMessage
@@ -296,19 +296,19 @@ class ValidationResult
     }
 }
 
-class ValidationRule
+public class ValidationRule
 {
-    var priority = 0
-    var expression = ""
-    var failureDescription = ""
+    public var priority = 0
+    public var expression = ""
+    public var failureDescription = ""
     
-    init(priority: Int, expression: String, failureDescription: String)
+    public init(priority: Int, expression: String, failureDescription: String)
     {
         self.priority = priority
         self.expression = expression
         self.failureDescription = failureDescription
     }
-    func validate(string:String) -> ValidationResult
+    public func validate(string:String) -> ValidationResult
     {
         let test = NSPredicate(format: "SELF MATCHES %@",expression)
         return ValidationResult(isValid: test.evaluateWithObject(string),failureMessage: failureDescription, transformedString: string)
@@ -317,9 +317,9 @@ class ValidationRule
 }
 
 @IBDesignable
-extension UITextField
+public extension UITextField
 {
-    func validate() -> ValidationResult
+    public func validate() -> ValidationResult
     {
         if self.validationExpression != nil{
             return Validation.expression.isValid(self.validationExpression!, string: self.text!)
@@ -328,12 +328,12 @@ extension UITextField
             return Validation.expression.isValid(self.validationType, string: self.text!)
         }
     }
-    func validate(validation: ValidationType) -> ValidationResult
+    public func validate(validation: ValidationType) -> ValidationResult
     {
         return Validation.expression.isValid(validation, string: self.text!)
     }
     @IBInspectable
-    var validation: String? {
+    public var validation: String? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.val) as? String
         }
@@ -389,6 +389,8 @@ extension UITextField
                                     self.allowedCharacters = AllHex + "."
                                 case .Name:
                                     self.allowedCharacters = AllLetters + "'" + "-"
+                                case .CreditCard:
+                                    self.allowedCharacters = PositiveWholeNumbers + " "
                                 default:
                                     break
                                 }
@@ -402,20 +404,59 @@ extension UITextField
             }
         }
     }
-    var validationType: ValidationType {
+    public var validationType: ValidationType {
         get {
             let rawvalue = objc_getAssociatedObject(self, &AssociatedKeys.enumContext)
             if rawvalue == nil{
+                self.allowedCharacters = ""
                 return .None
             }else{
                 return ValidationType(rawValue: rawvalue as! Int)!
             }
         }
         set {
+            switch newValue {
+            case .Email:
+                self.allowedCharacters = Email
+            case .Phone:
+                self.allowedCharacters = Phone
+            case .Zip, .SSN:
+                self.allowedCharacters = Zip
+            case .StreetAddress:
+                self.allowedCharacters = Street
+            case .IPAddress:
+                self.allowedCharacters = IPAddress
+            case .Money:
+                self.allowedCharacters = Money
+            case .Letters, .States:
+                self.allowedCharacters = AllLetters
+            case .LettersWithSpaces:
+                self.allowedCharacters = AllLetters + " "
+            case .AlphaNumeric:
+                self.allowedCharacters = AllLetters + PositiveWholeNumbers
+            case .AlphaNumericWithSpaces:
+                self.allowedCharacters = AllLetters + PositiveWholeNumbers + " "
+            case .PositiveNumbers:
+                self.allowedCharacters = PositiveWholeNumbers
+            case .PositiveFloats:
+                self.allowedCharacters = PositiveFloats
+            case .NegativeNumbers, .WholeNumbers:
+                self.allowedCharacters = WholeNumbers
+            case .NegativeFloats, .Floats:
+                self.allowedCharacters = Floats
+            case .MACAddress:
+                self.allowedCharacters = AllHex + "."
+            case .Name:
+                self.allowedCharacters = AllLetters + "'" + "-"
+            case .CreditCard:
+                self.allowedCharacters = PositiveWholeNumbers + " "
+            default:
+                break
+            }
             objc_setAssociatedObject(self, &AssociatedKeys.enumContext, newValue.rawValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    var validationExpression: ValidationExpression? {
+    public var validationExpression: ValidationExpression? {
         get {
             let exp = objc_getAssociatedObject(self, &AssociatedKeys.valExpression)
             if exp == nil{
@@ -428,7 +469,7 @@ extension UITextField
             objc_setAssociatedObject(self, &AssociatedKeys.valExpression, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    var allowedCharacters: String {
+    public var allowedCharacters: String {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.ac) as? String ?? ""
         }
@@ -442,15 +483,15 @@ extension UITextField
         }
     }
 }
-extension String
+public extension String
 {
-    var condensedWhitespace: String
+    public var condensedWhitespace: String
     {
         let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         return components.filter { !$0.isEmpty }.joinWithSeparator(" ")
     }
     
-    func shouldAllow(allowedCharacters: String...) -> Bool
+    public func shouldAllow(allowedCharacters: String...) -> Bool
     {
         if allowedCharacters.count == 1 && allowedCharacters[0] == ""{
             return true

@@ -13,10 +13,10 @@ private struct AssociatedKeys {
 }
 
 @IBDesignable
-extension UITextField
+public extension UITextField
 {
     @IBInspectable
-    var maxLength: Int {
+    public var maxLength: Int {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.len) as? Int ?? Int.max
         }
@@ -25,7 +25,7 @@ extension UITextField
         }
     }
     
-    func reachedMaxLength(range:NSRange, string:String)->Bool{
+    public func reachedMaxLength(range:NSRange, string:String)->Bool{
         let oldLength = self.text!.characters.count
         let replacementLength = string.characters.count
         let rangeLength = range.length
@@ -48,10 +48,10 @@ extension UITextField
 }
 
 @IBDesignable
-extension UITextView
+public extension UITextView
 {
     @IBInspectable
-    var maxLength: Int {
+    public var maxLength: Int {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.len) as? Int ?? Int.max
         }
@@ -60,7 +60,7 @@ extension UITextView
         }
     }
     
-    func reachedMaxLength(range:NSRange, string:String)->Bool{
+    public func reachedMaxLength(range:NSRange, string:String)->Bool{
         let oldLength = self.text!.characters.count
         let replacementLength = string.characters.count
         let rangeLength = range.length
