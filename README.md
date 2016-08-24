@@ -153,9 +153,9 @@ func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRa
 
 **UITextField predefined strings**
 ```swift
-let UpperCaseLetters = "ABCDEFGHIJKLKMNOPQRSTUVWXYZ"
+let UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
-let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ"
+let AllLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let UpperCaseHex = "0123456789ABCDEF"
 let LowerCaseHex = "0123456789abcdef"
 let AllHex = "0123456789abcdefABCDEF"
@@ -163,8 +163,8 @@ let PositiveWholeNumbers = "0123456789"
 let WholeNumbers = "-0123456789"
 let PositiveFloats = "0123456789."
 let Floats = "-0123456789."
-let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_-+@.%"
-let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 -#.&"
+let Email = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+@.%"
+let Street = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -#.&"
 let IPAddress = "0123456789."
 let Money = "0123456789.$"
 let Phone = "0123456789.()- "
