@@ -266,9 +266,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 
 
-## Author
+## Authors
 
-Andrew Goodwin, andrewggoodwin@gmail.com :)
+Ian Howerton and Andrew Goodwin, andrewggoodwin@gmail.com
 
 ## License
 
