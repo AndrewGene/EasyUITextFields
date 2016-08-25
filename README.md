@@ -1,4 +1,4 @@
-# WASHD - What Apple Should Have Done
+# ETF - Easy Text Fields
 ##The easiest way to add validation, text filtering, max length, and text field order to your UITextFields
 
 ###The best part is that you don't have to subclass UITextField--this is made using extensions
@@ -13,12 +13,14 @@
 
 ## Installation
 
-WASHD is available through [CocoaPods](http://cocoapods.org). To install
+ETF (formerly, WASHD) is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
 pod "WASHD"
 ```
+**_This pod will be renamed shortly to ETF_**
+
 ##Usage
 ###Interface Builder
 ![IB](/IBScreenshot.png?raw=true "Interface Builder")
