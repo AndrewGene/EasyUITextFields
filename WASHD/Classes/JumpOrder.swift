@@ -46,18 +46,18 @@ public extension UITextField
         }
     }
     
-    private var textLengthNotification: AnyObject? {
+    fileprivate var textLengthNotification: AnyObject? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.tln) ?? nil
+            return objc_getAssociatedObject(self, &AssociatedKeys.tln) as AnyObject?? ?? nil
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.tln, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
-    private var textFormatNotification: AnyObject? {
+    fileprivate var textFormatNotification: AnyObject? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.tfn) ?? nil
+            return objc_getAssociatedObject(self, &AssociatedKeys.tfn) as AnyObject?? ?? nil
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.tfn, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -71,19 +71,19 @@ public extension UITextField
         }
         set {
             if textFormatNotification != nil{
-                NSNotificationCenter.defaultCenter().removeObserver(textFormatNotification!)
+                NotificationCenter.default.removeObserver(textFormatNotification!)
             }
-           textFormatNotification = NSNotificationCenter.defaultCenter().addObserverForName("text.MoveNext.Format", object: nil, queue: NSOperationQueue.mainQueue()) { [weak self](notification) in
+           textFormatNotification = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "text.MoveNext.Format"), object: nil, queue: OperationQueue.main) { [weak self](notification) in
                 if self!.formatJump{
-                    NSNotificationCenter.defaultCenter().postNotificationName("firstResponder.MoveNext.Format", object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "firstResponder.MoveNext.Format"), object: nil)
                 }
             }
             if textLengthNotification != nil{
-                NSNotificationCenter.defaultCenter().removeObserver(textLengthNotification!)
+                NotificationCenter.default.removeObserver(textLengthNotification!)
             }
-            textLengthNotification = NSNotificationCenter.defaultCenter().addObserverForName("text.MoveNext.MaxLength", object: nil, queue: NSOperationQueue.mainQueue()) { [weak self](notification) in
+            textLengthNotification = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "text.MoveNext.MaxLength"), object: nil, queue: OperationQueue.main) { [weak self](notification) in
                 if self!.lengthJump{
-                    NSNotificationCenter.defaultCenter().postNotificationName("firstResponder.MoveNext.MaxLength", object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "firstResponder.MoveNext.MaxLength"), object: nil)
                 }
             }
             objc_setAssociatedObject(self, &AssociatedKeys.fri, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -138,25 +138,25 @@ public extension UIViewController{
             )
         }
     }
-    private var moveNextDate: NSDate? {
+    fileprivate var moveNextDate: Date? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.mnd) as? NSDate ?? nil
+            return objc_getAssociatedObject(self, &AssociatedKeys.mnd) as? Date ?? nil
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.mnd, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    private var formatNotification: AnyObject? {
+    fileprivate var formatNotification: AnyObject? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.fn) ?? nil
+            return objc_getAssociatedObject(self, &AssociatedKeys.fn) as AnyObject?? ?? nil
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.fn, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    private var lengthNotification: AnyObject? {
+    fileprivate var lengthNotification: AnyObject? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.ln) ?? nil
+            return objc_getAssociatedObject(self, &AssociatedKeys.ln) as AnyObject?? ?? nil
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.ln, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -164,7 +164,7 @@ public extension UIViewController{
     }
     
     public func moveNext(){
-        self.moveNextDate = NSDate()
+        self.moveNextDate = Date()
         for view in self.textInputArray{
             if view is UITextField{
                 let tf = view as! UITextField
@@ -188,9 +188,9 @@ public extension UIViewController{
     public func findAllTextInputs(){
         self.textInputArray = [UIView]()
         if formatNotification != nil{
-            NSNotificationCenter.defaultCenter().removeObserver(formatNotification!)
+            NotificationCenter.default.removeObserver(formatNotification!)
         }
-        formatNotification = NSNotificationCenter.defaultCenter().addObserverForName("firstResponder.MoveNext.Format", object: nil, queue: NSOperationQueue.mainQueue()) { [weak self](notification) in
+        formatNotification = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "firstResponder.MoveNext.Format"), object: nil, queue: OperationQueue.main) { [weak self](notification) in
             if self!.moveNextDate == nil{
                 //nothing has fired before
                 self!.moveNext()
@@ -206,9 +206,9 @@ public extension UIViewController{
             }            
         }
         if lengthNotification != nil{
-            NSNotificationCenter.defaultCenter().removeObserver(lengthNotification!)
+            NotificationCenter.default.removeObserver(lengthNotification!)
         }
-        lengthNotification = NSNotificationCenter.defaultCenter().addObserverForName("firstResponder.MoveNext.MaxLength", object: nil, queue: NSOperationQueue.mainQueue()) { [weak self](notification) in
+        lengthNotification = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "firstResponder.MoveNext.MaxLength"), object: nil, queue: OperationQueue.main) { [weak self](notification) in
             if self!.moveNextDate == nil{
                 //nothing has fired before
                 self!.moveNext()
@@ -226,9 +226,9 @@ public extension UIViewController{
         findAllTextInputsInView(self.view)
     }
     
-    private func findAllTextInputsInView(inputView:UIView){
+    fileprivate func findAllTextInputsInView(_ inputView:UIView){
         for view in inputView.subviews{
-            if view.respondsToSelector(#selector(UITextField.getjumpOrder)) || view.respondsToSelector(#selector(UITextView.getjumpOrder)){
+            if view.responds(to: #selector(UITextField.getjumpOrder)) || view.responds(to: #selector(UITextView.getjumpOrder)){
                 if view is UITextField{
                     textInputArray.append(view)
                     if view.subviews.count > 0{

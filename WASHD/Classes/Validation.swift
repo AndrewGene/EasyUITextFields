@@ -8,6 +8,26 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 public let UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 public let LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
@@ -26,12 +46,12 @@ public let Money = "0123456789.$"
 public let Phone = "0123456789.()- "
 public let Zip = "0123456789-"
 
-public class Validation
+open class Validation
 {
     var expressions = [ValidationExpression]()
     static var expression = Validation()
     
-    private init()
+    fileprivate init()
     {
         
         let zip = ValidationExpression(expression: "^\\d{5}(-\\d{4})?$", description: "Zip Code",failureDescription: "Invalid Zip Code", hints: [
@@ -39,7 +59,7 @@ public class Validation
             ValidationRule(priority: 0, expression: "[0-9]+", failureDescription: "Not numbers"),
             ], interfaceBuilderAliases: ["zip","zip code"], transformText: { (zipcode) in
                 var myString = zipcode
-                myString = myString?.stringByReplacingOccurrencesOfString(" ", withString: "")
+                myString = myString?.replacingOccurrences(of: " ", with: "")
                 return myString!
             }, furtherValidation:nil)
         
@@ -63,7 +83,7 @@ public class Validation
             ValidationRule(priority: 1, expression: "[.]{1}[a-z]+$", failureDescription: "Requries exactly one period")
             ], interfaceBuilderAliases: ["email","email address","@"], transformText:{ (email) in
                 var myString = email
-                myString = myString?.condensedWhitespace.lowercaseString
+                myString = myString?.condensedWhitespace.lowercased()
                 return myString!
             }, furtherValidation:nil)
         
@@ -84,7 +104,7 @@ public class Validation
                                               interfaceBuilderAliases: ["card","credit card","debit card","cc"],
                                               transformText:{ (card) in
                                                 var myString = card
-                                                myString = myString?.condensedWhitespace.stringByReplacingOccurrencesOfString(" ", withString: "")
+                                                myString = myString?.condensedWhitespace.replacingOccurrences(of: " ", with: "")
                                                 return myString!
             },
                                               furtherValidation:{[weak self] (card) in
@@ -141,25 +161,25 @@ public class Validation
         
     }
     
-    public func isValid(expression: ValidationExpression, string: String) -> ValidationResult
+    open func isValid(_ expression: ValidationExpression, string: String) -> ValidationResult
     {
         return expression.validate(string)
     }
     
-    public func isValid(validation: ValidationType, string: String) -> ValidationResult
+    open func isValid(_ validation: ValidationType, string: String) -> ValidationResult
     {
         let expression = expressions[validation.rawValue]
         return expression.validate(string)
     }
     
-    func luhnTest(number: String) -> Bool{
+    func luhnTest(_ number: String) -> Bool{
         let noSpaceNum = number.condensedWhitespace
-        let reversedInts = noSpaceNum.characters.reverse().map
+        let reversedInts:[Int] = noSpaceNum.characters.reversed().map
             {
                 Int(String($0))
-        }
-        return reversedInts.enumerate().reduce(0, combine: {(sum, val) in let odd = val.index % 2 == 1
-            return sum + (odd ? (val.element! == 9 ? 9 : (val.element! * 2) % 9) : val.element!)
+            }.flatMap { $0 }
+        return reversedInts.enumerated().reduce(0, {(sum, val) in let odd = val.offset % 2 == 1
+            return sum + (odd ? (val.element == 9 ? 9 : (val.element * 2) % 9) : val.element)
         }) % 10 == 0
     }
     
@@ -167,32 +187,32 @@ public class Validation
 
 public enum ValidationType : Int
 {
-    case None = -1
-    case Zip = 0
-    case StreetAddress = 1
-    case Phone = 2
-    case Email = 3
-    case IPAddress = 4
-    case MACAddress = 5
-    case GPSCoordinate = 6
-    case GPSPoint = 7
-    case URL = 8
-    case CreditCard = 9
-    case Money = 10
-    case Letters = 11
-    case LettersWithSpaces = 12
-    case AlphaNumeric = 13
-    case AlphaNumericWithSpaces = 14
-    case PositiveNumbers = 15
-    case NegativeNumbers = 16
-    case WholeNumbers = 17
-    case PositiveFloats = 18
-    case NegativeFloats = 19
-    case Floats = 20
-    case Text = 21
-    case SSN = 22
-    case States = 23
-    case Name = 24
+    case none = -1
+    case zip = 0
+    case streetAddress = 1
+    case phone = 2
+    case email = 3
+    case ipAddress = 4
+    case macAddress = 5
+    case gpsCoordinate = 6
+    case gpsPoint = 7
+    case url = 8
+    case creditCard = 9
+    case money = 10
+    case letters = 11
+    case lettersWithSpaces = 12
+    case alphaNumeric = 13
+    case alphaNumericWithSpaces = 14
+    case positiveNumbers = 15
+    case negativeNumbers = 16
+    case wholeNumbers = 17
+    case positiveFloats = 18
+    case negativeFloats = 19
+    case floats = 20
+    case text = 21
+    case ssn = 22
+    case states = 23
+    case name = 24
 }
 
 private struct AssociatedKeys {
@@ -202,16 +222,16 @@ private struct AssociatedKeys {
     static var ac = "allowedChars"
 }
 
-public class ValidationExpression
+open class ValidationExpression
 {
-    public var hints: [ValidationRule]?
-    public var description = ""
-    public var expression = ""
-    public var failureDescription = ""
-    public var aliases: [String]?
-    public var transformedString = ""
-    private var transformationClosure: ((String?) -> String)? = nil
-    private var furtherValidationClosure: ((String) -> ValidationResult)? = nil
+    open var hints: [ValidationRule]?
+    open var description = ""
+    open var expression = ""
+    open var failureDescription = ""
+    open var aliases: [String]?
+    open var transformedString = ""
+    fileprivate var transformationClosure: ((String?) -> String)? = nil
+    fileprivate var furtherValidationClosure: ((String) -> ValidationResult)? = nil
     
     public init()
     {
@@ -229,7 +249,7 @@ public class ValidationExpression
         self.expression = expression
         self.description = description
         self.hints = hints
-        self.hints = self.hints?.sort{
+        self.hints = self.hints?.sorted{
             item1, item2 in
             return item1.priority < item2.priority
         }
@@ -242,7 +262,7 @@ public class ValidationExpression
         self.expression = expression
         self.description = description
         self.hints = hints
-        self.hints = self.hints?.sort{
+        self.hints = self.hints?.sorted{
             item1, item2 in
             return item1.priority < item2.priority
         }
@@ -250,7 +270,7 @@ public class ValidationExpression
         self.failureDescription = failureDescription
         self.furtherValidationClosure = furtherValidation
     }
-    public func validate(string: String) -> ValidationResult
+    open func validate(_ string: String) -> ValidationResult
     {
         self.transformedString = string
         if self.transformationClosure != nil
@@ -259,7 +279,7 @@ public class ValidationExpression
         }
        
         let test = NSPredicate(format: "SELF MATCHES %@",expression)
-        let isValid = test.evaluateWithObject(self.transformedString)
+        let isValid = test.evaluate(with: self.transformedString)
         if isValid == false
         {
             if hints != nil && hints?.count > 0{
@@ -282,11 +302,11 @@ public class ValidationExpression
     }
 }
 
-public class ValidationResult
+open class ValidationResult
 {
-    public var isValid = false
-    public var failureMessage : String? = nil
-    public var transformedString : String = ""
+    open var isValid = false
+    open var failureMessage : String? = nil
+    open var transformedString : String = ""
     
     public init(isValid: Bool, failureMessage:String?, transformedString: String)
     {
@@ -296,11 +316,11 @@ public class ValidationResult
     }
 }
 
-public class ValidationRule
+open class ValidationRule
 {
-    public var priority = 0
-    public var expression = ""
-    public var failureDescription = ""
+    open var priority = 0
+    open var expression = ""
+    open var failureDescription = ""
     
     public init(priority: Int, expression: String, failureDescription: String)
     {
@@ -308,10 +328,10 @@ public class ValidationRule
         self.expression = expression
         self.failureDescription = failureDescription
     }
-    public func validate(string:String) -> ValidationResult
+    open func validate(_ string:String) -> ValidationResult
     {
         let test = NSPredicate(format: "SELF MATCHES %@",expression)
-        return ValidationResult(isValid: test.evaluateWithObject(string),failureMessage: failureDescription, transformedString: string)
+        return ValidationResult(isValid: test.evaluate(with: string),failureMessage: failureDescription, transformedString: string)
     }
     
 }
@@ -328,7 +348,7 @@ public extension UITextField
             return Validation.expression.isValid(self.validationType, string: self.text!)
         }
     }
-    public func validate(validation: ValidationType) -> ValidationResult
+    public func validate(_ validation: ValidationType) -> ValidationResult
     {
         return Validation.expression.isValid(validation, string: self.text!)
     }
@@ -350,46 +370,46 @@ public extension UITextField
                     let expression = Validation.expression.expressions[index]
                     if expression.aliases != nil{
                         for alias in expression.aliases!{
-                            if newValue.condensedWhitespace.lowercaseString.stringByTrimmingCharactersInSet(
-                                NSCharacterSet.whitespaceAndNewlineCharacterSet()
-                                ) == alias.condensedWhitespace.lowercaseString.stringByTrimmingCharactersInSet(
-                                    NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                            if newValue.condensedWhitespace.lowercased().trimmingCharacters(
+                                in: CharacterSet.whitespacesAndNewlines
+                                ) == alias.condensedWhitespace.lowercased().trimmingCharacters(
+                                    in: CharacterSet.whitespacesAndNewlines
                                 ){
                                 self.validationType = ValidationType(rawValue: index)!
                                 switch self.validationType {
-                                case .Email:
+                                case .email:
                                     self.allowedCharacters = Email
-                                case .Phone:
+                                case .phone:
                                     self.allowedCharacters = Phone
-                                case .Zip, .SSN:
+                                case .zip, .ssn:
                                     self.allowedCharacters = Zip
-                                case .StreetAddress:
+                                case .streetAddress:
                                     self.allowedCharacters = Street
-                                case .IPAddress:
+                                case .ipAddress:
                                     self.allowedCharacters = IPAddress
-                                case .Money:
+                                case .money:
                                     self.allowedCharacters = Money
-                                case .Letters, .States:
+                                case .letters, .states:
                                     self.allowedCharacters = AllLetters
-                                case .LettersWithSpaces:
+                                case .lettersWithSpaces:
                                     self.allowedCharacters = AllLetters + " "
-                                case .AlphaNumeric:
+                                case .alphaNumeric:
                                     self.allowedCharacters = AllLetters + PositiveWholeNumbers
-                                case .AlphaNumericWithSpaces:
+                                case .alphaNumericWithSpaces:
                                     self.allowedCharacters = AllLetters + PositiveWholeNumbers + " "
-                                case .PositiveNumbers:
+                                case .positiveNumbers:
                                     self.allowedCharacters = PositiveWholeNumbers
-                                case .PositiveFloats:
+                                case .positiveFloats:
                                     self.allowedCharacters = PositiveFloats
-                                case .NegativeNumbers, .WholeNumbers:
+                                case .negativeNumbers, .wholeNumbers:
                                     self.allowedCharacters = WholeNumbers
-                                case .NegativeFloats, .Floats:
+                                case .negativeFloats, .floats:
                                     self.allowedCharacters = Floats
-                                case .MACAddress:
+                                case .macAddress:
                                     self.allowedCharacters = AllHex + "."
-                                case .Name:
+                                case .name:
                                     self.allowedCharacters = AllLetters + "'" + "-"
-                                case .CreditCard:
+                                case .creditCard:
                                     self.allowedCharacters = PositiveWholeNumbers + " "
                                 default:
                                     break
@@ -398,7 +418,7 @@ public extension UITextField
                         }
                     }
                     else{
-                        self.validationType = .None
+                        self.validationType = .none
                     }
                 }
             }
@@ -409,46 +429,46 @@ public extension UITextField
             let rawvalue = objc_getAssociatedObject(self, &AssociatedKeys.enumContext)
             if rawvalue == nil{
                 self.allowedCharacters = ""
-                return .None
+                return .none
             }else{
                 return ValidationType(rawValue: rawvalue as! Int)!
             }
         }
         set {
             switch newValue {
-            case .Email:
+            case .email:
                 self.allowedCharacters = Email
-            case .Phone:
+            case .phone:
                 self.allowedCharacters = Phone
-            case .Zip, .SSN:
+            case .zip, .ssn:
                 self.allowedCharacters = Zip
-            case .StreetAddress:
+            case .streetAddress:
                 self.allowedCharacters = Street
-            case .IPAddress:
+            case .ipAddress:
                 self.allowedCharacters = IPAddress
-            case .Money:
+            case .money:
                 self.allowedCharacters = Money
-            case .Letters, .States:
+            case .letters, .states:
                 self.allowedCharacters = AllLetters
-            case .LettersWithSpaces:
+            case .lettersWithSpaces:
                 self.allowedCharacters = AllLetters + " "
-            case .AlphaNumeric:
+            case .alphaNumeric:
                 self.allowedCharacters = AllLetters + PositiveWholeNumbers
-            case .AlphaNumericWithSpaces:
+            case .alphaNumericWithSpaces:
                 self.allowedCharacters = AllLetters + PositiveWholeNumbers + " "
-            case .PositiveNumbers:
+            case .positiveNumbers:
                 self.allowedCharacters = PositiveWholeNumbers
-            case .PositiveFloats:
+            case .positiveFloats:
                 self.allowedCharacters = PositiveFloats
-            case .NegativeNumbers, .WholeNumbers:
+            case .negativeNumbers, .wholeNumbers:
                 self.allowedCharacters = WholeNumbers
-            case .NegativeFloats, .Floats:
+            case .negativeFloats, .floats:
                 self.allowedCharacters = Floats
-            case .MACAddress:
+            case .macAddress:
                 self.allowedCharacters = AllHex + "."
-            case .Name:
+            case .name:
                 self.allowedCharacters = AllLetters + "'" + "-"
-            case .CreditCard:
+            case .creditCard:
                 self.allowedCharacters = PositiveWholeNumbers + " "
             default:
                 break
@@ -487,11 +507,11 @@ public extension String
 {
     public var condensedWhitespace: String
     {
-        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        return components.filter { !$0.isEmpty }.joinWithSeparator(" ")
+        let components = self.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        return components.filter { !$0.isEmpty }.joined(separator: " ")
     }
     
-    public func shouldAllow(allowedCharacters: String...) -> Bool
+    public func shouldAllow(_ allowedCharacters: String...) -> Bool
     {
         if allowedCharacters.count == 1 && allowedCharacters[0] == ""{
             return true
@@ -500,9 +520,9 @@ public extension String
         
         for str in allowedCharacters
         {
-            characterSet.addCharactersInString(str)
+            characterSet.addCharacters(in: str)
         }
         
-        return !(self.rangeOfCharacterFromSet(characterSet.invertedSet) != nil)
+        return !(self.rangeOfCharacter(from: characterSet.inverted) != nil)
     }
 }

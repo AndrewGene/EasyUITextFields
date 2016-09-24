@@ -38,7 +38,7 @@ public extension UITextField
 
         }
     }
-    private var textSourceArray: [String] {
+    fileprivate var textSourceArray: [String] {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.ld) as? [String] ?? []
         }
@@ -52,7 +52,7 @@ public extension UITextField
         }
     }
     
-    public func formatText(string:String)->Bool{
+    public func formatText(_ string:String)->Bool{
         //string is the newest character to be added
         if self.format != "" && self.text != nil{
             let backspace = string == ""
@@ -65,14 +65,14 @@ public extension UITextField
                 textFieldArray = textFieldArray + newStringArray
                 for _ in newStringArray{
                     if textSourceArray.count < formatArray.count{
-                        if String(formatArray[textSourceArray.count]).lowercaseString == "x"{
+                        if String(formatArray[textSourceArray.count]).lowercased() == "x"{
                             newText = newText + String(textFieldArray[textFieldIndex+1])
                             textFieldIndex = textFieldIndex + 1
                             textSourceArray.append("u")
                         }
                         else{
-                            while String(formatArray[textSourceArray.count]).lowercaseString != "x"{
-                                if String(formatArray[textSourceArray.count]).lowercaseString == "\\"{
+                            while String(formatArray[textSourceArray.count]).lowercased() != "x"{
+                                if String(formatArray[textSourceArray.count]).lowercased() == "\\"{
                                     newText = newText + "x"
                                     textSourceArray.append("e")
                                     textSourceArray.append("f")
@@ -95,9 +95,9 @@ public extension UITextField
                 }
                 self.text = self.text! + newText
                 if self.text?.characters.count == formatArray.count{
-                    NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.Format", object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "text.MoveNext.Format"), object: nil)
                 }
-                self.sendActionsForControlEvents(.EditingChanged)
+                self.sendActions(for: .editingChanged)
                 return false
             }
             else{
@@ -129,7 +129,7 @@ public extension UITextField
                 }
                 
                 self.text = newText
-                self.sendActionsForControlEvents(.EditingChanged)
+                self.sendActions(for: .editingChanged)
                 return false
             }
         }
@@ -137,7 +137,7 @@ public extension UITextField
         return true
     }
     
-    private func formatChanged(oldFormat:String?){
+    fileprivate func formatChanged(_ oldFormat:String?){
         var newText = ""
         var enteredText = self.text
             enteredText = getUserEnteredCharacters(oldFormat!)
@@ -147,13 +147,13 @@ public extension UITextField
             let enteredArray = Array(enteredText!.characters)
             let formatArray = Array(self.format.characters)
             while enteredIndex < enteredArray.count && formatIndex < formatArray.count{
-                if String(formatArray[formatIndex]).lowercaseString == "\\"{
+                if String(formatArray[formatIndex]).lowercased() == "\\"{
                     textSourceArray.append("e")
                     textSourceArray.append("f")
                     newText = newText + "x"
                     formatIndex = formatIndex + 2
                 }
-                else if String(formatArray[formatIndex]).lowercaseString == "x"{
+                else if String(formatArray[formatIndex]).lowercased() == "x"{
                     newText = newText + String(enteredArray[enteredIndex])
                     enteredIndex = enteredIndex + 1
                     formatIndex = formatIndex + 1
@@ -175,14 +175,14 @@ public extension UITextField
         
     }
     
-    private func getUserEnteredCharacters(fromFormat:String) -> String{
+    fileprivate func getUserEnteredCharacters(_ fromFormat:String) -> String{
         if fromFormat == ""{
             return self.text!
         }
         var enteredText = ""
         let enteredArray = Array(self.text!.characters)
         var userEnteredIndices = [Int]()
-        let _ = textSourceArray.enumerate().filter{(index, element) in
+        let _ = textSourceArray.enumerated().filter{(index, element) in
             if element == "u"{
                 userEnteredIndices.append(index)
                 return true
