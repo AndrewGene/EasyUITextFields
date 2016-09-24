@@ -9,31 +9,31 @@
 import UIKit
 import WASHD
 
-public class ViewController: UIViewController, UITextFieldDelegate {
+open class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var txtIB: UITextField!
     @IBOutlet var txtProgrammatic: UITextField!
     @IBOutlet var txtAdvanced: UITextField!
     var lblRight = UILabel()
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.findAllTextInputs() //find all text inputs in the view controller for jump order process
         
         //Programmatic UITextField setup
-        txtProgrammatic.validationType = .CreditCard
+        txtProgrammatic.validationType = .creditCard
         txtProgrammatic.format = "xxxx xxxx xxxx xxxx"
         txtProgrammatic.maxLength = 19
         txtProgrammatic.jumpOrder = 1
         print(txtProgrammatic.allowedCharacters) //most built in validation types set allowedCharacters for you
         
-        lblRight = UILabel(frame: CGRectMake(txtProgrammatic.frame.size.width - 60,0,60,txtProgrammatic.frame.size.height))
-        lblRight.textAlignment = .Center
-        lblRight.font = UIFont.systemFontOfSize(10)
-        lblRight.textColor = UIColor.lightGrayColor()
+        lblRight = UILabel(frame: CGRect(x: txtProgrammatic.frame.size.width - 60,y: 0,width: 60,height: txtProgrammatic.frame.size.height))
+        lblRight.textAlignment = .center
+        lblRight.font = UIFont.systemFont(ofSize: 10)
+        lblRight.textColor = UIColor.lightGray
         txtProgrammatic.rightView = lblRight
-        txtProgrammatic.rightViewMode = .Always
+        txtProgrammatic.rightViewMode = .always
         
         //Advanced usage: make your own validation expression (regex), transform input text before validation, and further validation
         //NOTE: regex specifies at least 5 digits
@@ -43,7 +43,7 @@ public class ViewController: UIViewController, UITextFieldDelegate {
                                              hints: [ValidationRule(priority: 0, expression: "\\d+", failureDescription: "Missing Numbers")],
                                              transformText:{ (account) in
                                                 var myString = account
-                                                myString = myString?.condensedWhitespace.stringByReplacingOccurrencesOfString(" ", withString: "")
+                                                myString = myString?.condensedWhitespace.replacingOccurrences(of: " ", with: "")
                                                 return myString!
             },
                                              furtherValidation:{[weak self] (account) in
@@ -60,25 +60,25 @@ public class ViewController: UIViewController, UITextFieldDelegate {
         txtAdvanced.allowedCharacters = PositiveWholeNumbers
     }
     
-    func hasA4(account:String)->Bool{
-        return account.rangeOfString("4") != nil
+    func hasA4(_ account:String)->Bool{
+        return account.range(of: "4") != nil
     }
 
-    override public func viewDidAppear(animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         txtIB.becomeFirstResponder()
     }
     
-    public func textFieldDidBeginEditing(textField: UITextField) {
+    open func textFieldDidBeginEditing(_ textField: UITextField) {
         self.currentjumpOrder = textField.jumpOrder //set current first responder index
     }
     
-    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.moveNext() //move to the next text input in order
         return true
     }
     
-    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if textField.reachedMaxLength(range, string: string) || !string.shouldAllow(textField.allowedCharacters){
             return false
@@ -87,7 +87,7 @@ public class ViewController: UIViewController, UITextFieldDelegate {
         return textField.formatText(string)
     }
     
-    @IBAction func textFieldDidChange(textField: UITextField) {
+    @IBAction func textFieldDidChange(_ textField: UITextField) {
         if textField == txtProgrammatic{
             //this is a credit card number
             //NOTE:this does not cover ALL cards but is used as a simple example of something you COULD do
@@ -109,7 +109,7 @@ public class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func changeFormat(sender: AnyObject) {
+    @IBAction func changeFormat(_ sender: AnyObject) {
         if txtIB.format == "(xxx) xxx-xxxx"{
             txtIB.format = "xxx.xxx.xxxx"
         }
@@ -121,7 +121,7 @@ public class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func validateForm(sender: AnyObject) {
+    @IBAction func validateForm(_ sender: AnyObject) {
         
         let resultIB = txtIB.validate()
         if resultIB.isValid{
@@ -150,7 +150,7 @@ public class ViewController: UIViewController, UITextFieldDelegate {
         //This is where you would normally show the end user your error messages. Only if they are all valid would you then submit your form.
     }
     
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

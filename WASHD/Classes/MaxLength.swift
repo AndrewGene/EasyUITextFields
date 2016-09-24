@@ -25,24 +25,24 @@ public extension UITextField
         }
     }
     
-    public func reachedMaxLength(range:NSRange, string:String)->Bool{
+    public func reachedMaxLength(_ range:NSRange, string:String)->Bool{
         let oldLength = self.text!.characters.count
         let replacementLength = string.characters.count
         let rangeLength = range.length
         let newLength = oldLength - rangeLength + replacementLength
         
-        let returnKey = string.rangeOfString("\n") != nil
+        let returnKey = string.range(of: "\n") != nil
         let isBackspace = string == ""
         let shouldAllow = newLength <= self.maxLength || returnKey || isBackspace
         if self.maxLength == newLength{
             //do i support auto first responder
-            NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(goNext), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(goNext), userInfo: nil, repeats: false)
         }
         return !shouldAllow
     }
     
-    @objc private func goNext(){
-         NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.MaxLength", object: nil)
+    @objc fileprivate func goNext(){
+         NotificationCenter.default.post(name: Notification.Name(rawValue: "text.MoveNext.MaxLength"), object: nil)
     }
     
 }
@@ -60,24 +60,24 @@ public extension UITextView
         }
     }
     
-    public func reachedMaxLength(range:NSRange, string:String)->Bool{
+    public func reachedMaxLength(_ range:NSRange, string:String)->Bool{
         let oldLength = self.text!.characters.count
         let replacementLength = string.characters.count
         let rangeLength = range.length
         let newLength = oldLength - rangeLength + replacementLength
         
-        let returnKey = string.rangeOfString("\n") != nil
+        let returnKey = string.range(of: "\n") != nil
         let isBackspace = string == ""
         let shouldAllow = newLength <= self.maxLength || returnKey || isBackspace
         if self.maxLength == newLength{
             //do i support auto first responder
-            NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(goNext), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(goNext), userInfo: nil, repeats: false)
         }
         return shouldAllow
     }
     
-    @objc private func goNext(){
-        NSNotificationCenter.defaultCenter().postNotificationName("text.MoveNext.MaxLength", object: nil)
+    @objc fileprivate func goNext(){
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "text.MoveNext.MaxLength"), object: nil)
     }
     
 }
