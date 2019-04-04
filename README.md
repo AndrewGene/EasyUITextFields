@@ -1,7 +1,7 @@
 # Easy UITextFields
-##The easiest way to add validation, text filtering, max length, and text field order to your UITextFields
+## The easiest way to add validation, text filtering, max length, and text field order to your UITextFields
 
-###The best part is that you don't have to subclass UITextField--this is made using extensions
+### The best part is that you don't have to subclass UITextField--this is made using extensions
 
 [![Version](https://img.shields.io/cocoapods/v/WASHD.svg?style=flat)](http://cocoapods.org/pods/WASHD)
 [![License](https://img.shields.io/cocoapods/l/WASHD.svg?style=flat)](http://cocoapods.org/pods/WASHD)
@@ -21,11 +21,11 @@ pod "WASHD"
 ```
 **_This pod will be renamed shortly to EasyUITextFields_**
 
-##Usage
-###Interface Builder
+## Usage
+### Interface Builder
 ![IB](/IBScreenshot.png?raw=true "Interface Builder")
 
-##Required Code
+## Required Code
 **To Support UITextField "jump order"**
 ```swift
 override func viewDidLoad() {
@@ -70,7 +70,7 @@ else
   print(result.failureMessage)
 }
 ```
-#That's it!
+# That's it!
 
 **Validation Result**
 ```swift
@@ -115,7 +115,7 @@ class ValidationResult
 ```
 
 
-###You can also set everything up programatically
+### You can also set everything up programatically
 ```swift
 txtCreditCard.validationType = .CreditCard
 txtCreditCard.format = "xxxx xxxx xxxx xxxx"
@@ -123,9 +123,9 @@ txtCreditCard.maxLength = 19
 txtCreditCard.jumpOrder = 1
 ```
 
-#Individual Enchancement Breakdown
+# Individual Enchancement Breakdown
 
-##Supporting Max Length
+## Supporting Max Length
 ```swift
 func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
 {
@@ -136,9 +136,9 @@ func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRa
 }
 ```
 
-##Filtering UITextField
+## Filtering UITextField
 
-###It's built in if you use validation!
+### It's built in if you use validation!
 
 **(e.g. a textfield with a validationType set to ".Zip" (i.e. txtZip.validationType = .Zip) will get have txtZip.allowedCharacters set to the Zip constant below)**
 
@@ -173,7 +173,7 @@ let Phone = "0123456789.()- "
 let Zip = "0123456789-“
 ```
 
-###Alternatively, you can add your own using "shouldAllow(String...)"
+### Alternatively, you can add your own using "shouldAllow(String...)"
 ```swift
 func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool 
 {
@@ -181,9 +181,9 @@ func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRa
 }
 ```
 
-##Validation
+## Validation
 
-###Declare your own — simple expression...
+### Declare your own — simple expression...
 ```swift
 let zip = ValidationExpression(expression: "^\\d{5}(-\\d{4})?$", description: "Zip Code",failureDescription: "Invalid Zip Code”) 
 ```
@@ -192,7 +192,7 @@ let zip = ValidationExpression(expression: "^\\d{5}(-\\d{4})?$", description: "Z
 txtZip.validationExpression = zip
 ```
 
-###More advanced validation
+### More advanced validation
 * adds sub-rules for more user friendly hints on how to fix a problem
 * text transformation / cleaning **(Transformation is done BEFORE validation and is optional)**
 
@@ -210,7 +210,7 @@ let zip = ValidationExpression(expression: "^\\d{5}(-\\d{4})?$", description: "Z
 ```
 
 
-###Most advanced
+### Most advanced
 * hints
 * input text transformation
 * further validation
@@ -255,12 +255,12 @@ func luhnTest(number: String) -> Bool
 ```
 
 
-##TODOs
+## TODOs
 - [x] Add character filtering
 - [ ] Add more useful hints for several validationTypes
 - [ ] Update code to Swift 3
 
-###Please feel free to make a pull request and add more commonly-used validations
+### Please feel free to make a pull request and add more commonly-used validations
 
 ## Example
 
